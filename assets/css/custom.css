@@ -12,7 +12,23 @@ Custom Css
 } */
 
 .custom-font {
-    font-family: "Caveat", cursive;
-    font-weight: 700;
+  font-family: "Caveat", cursive;
+  font-weight: 700;
 }
 
+/* .row.shop-body {
+    background-color: red !important;
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+.shop-body section {
+  flex-grow: 1 !important;
+  display: none !important;
+}
+
+.shop-body section.active {
+  display: block !important;
+} */
+
+/*  */

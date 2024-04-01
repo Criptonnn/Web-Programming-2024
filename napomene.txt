@@ -1,0 +1,20 @@
+Primjer:
+Bio sam na Contact page-u, koji ima contact.js koji validatea form (daje red border ako ne valja input)
+Prebacim se na Login page, koji nema contact.js skriptu, ali nekako se i na njemu isto validatea form ko na contact.js
+(Problem je SPAPP 99%)
+
+- Problem:
+svaki put kad pritisnem na poseban item u shopu da ga otvorim zasebno, spasi se id u localStorage uspjesno, ali nece da se odmah ucita
+nego ja moram da refreshujem stranicu kako bi se item updateao jer pretpostavljam da spapp cachea shop-single stranicu i prikazuje se jedna te ista
+Pokusavao sam sa .reload() ali nije uspjelo
+- Rjesenje:
+Unutar shop.js, u renderItems() funckiji gdje appendamo iteme na page, na <a> tag koji vodi na #shop-single, jednostavno dodijeliti target="_blank"
+Tako se svaki put realoada uspjesno c: 
+
+- Problem:
+Vezano za htdocs i localhost, sve mi je radilo preko live-servera na VScode-u, ali u htdocsu mi je izbacivalo za svaku skriptu da je ne moze pronaci
+- Rjesenje:
+Imao sam svaku skriptu ukljucenu na svaki .html file, a treba samo imati na index.html zbog spapp-a. Ali se stvara novi problem.
+Zbog skripti kao sto su shop.js, one se odmah loadaju i onda dodje do problema jer nismo usli na shop page. Tako da, rjesenje za to je:
+Na index.html ostaviti skripte koje su svugdje potrebne i vazda bi loadane trebale biti (jquery, jquery.validate,...), a na zasebnim
+pageovima, kao npr. shop.html, njemu na dnu includeati shop.js, za shop-single.html na dnu incudeati shop-single.js,...
