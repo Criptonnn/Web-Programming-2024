@@ -1,0 +1,483 @@
+<div class="col-lg-3">
+          <!-- <h1 class="h2 pb-4">Categories</h1> -->
+          <ul class="list-unstyled templatemo-accordion">
+            <li class="pb-3">
+              <a
+                class="collapsed d-flex justify-content-between h3 text-decoration-none"
+                href="#"
+              >
+                Categories
+                <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+              </a>
+              <ul class="collapse show list-unstyled pl-3">
+                <li>
+                  <a class="text-decoration-none" href="#shop-clothing"
+                    >Clothing</a
+                  >
+                </li>
+                <li>
+                  <a class="text-decoration-none" href="#shop-shoes">Shoes</a>
+                </li>
+                <li>
+                  <a class="text-decoration-none" href="#shop-accessories"
+                    >Accessories</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="pb-3">
+              <a
+                class="collapsed d-flex justify-content-between h3 text-decoration-none"
+                href="#"
+              >
+                Product
+                <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+              </a>
+              <ul id="collapseThree" class="collapse list-unstyled pl-3">
+                <li><a class="text-decoration-none" href="#">Training</a></li>
+                <li><a class="text-decoration-none" href="#">Sneakers</a></li>
+                <li><a class="text-decoration-none" href="#">Boots</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+
+        const item = document.createElement("div");
+            item.classList.add("col-md-4");
+            item.innerHTML =`
+            <div class="card mb-4 product-wap rounded-0">
+                <div class="card rounded-0">
+                  <img
+                    class="card-img rounded-0 img-fluid"
+                    src="${instance.image}"
+                  />
+                  <div
+                    class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
+                  >
+                    <ul class="list-unstyled">
+                      <li>
+                        <a
+                          class="btn btn-success text-white mt-2"
+                          href="#shop-single"
+                          ><i class="far fa-eye"></i
+                        ></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <a href="shop-single.html" class="h3 text-decoration-none"
+                    >${instance.name}</a
+                  >
+                  <ul
+                    class="w-100 list-unstyled d-flex justify-content-between mb-0"
+                  >
+                    <li>M/L/X/XL</li>
+                  </ul>
+                  <ul class="list-unstyled d-flex justify-content-center mb-1">
+                    <li>
+                    ${generateStarIcons(instance.rating)}
+                    </li>
+                  </ul>
+                  <p class="text-center mb-0">$${instance.price}</p>
+                </div>
+              </div>
+            </div>
+            `;
+
+            // $("#item-type").change(function() {
+//     let selectedType = $(this).val();
+//     console.log(selectedType);
+
+//     if (selectedType === "Clothes") {
+//         $(".shop-body_shoes").empty();
+//         $(".shop-body_accessories").empty();
+//         if (instance.category === "clothing") {
+//             shopBodyClothing.append(item);
+//         }
+//     }
+//     else if (selectedType === "Shoes") {
+//         $(".shop-body_clothing").empty();
+//         $(".shop-body_accessories").empty();
+//         if (instance.category === "shoes") {
+//             shopBodyShoes.append(item);
+//         }
+//     }
+//     else if (selectedType === "Accessories") {
+//         $(".shop-body_shoes").empty();
+//         $(".shop-body_clothing").empty();
+//         if (instance.category === "accessories") {
+//             shopBodyAccessories.append(item);
+//         }
+//     }
+// });
+
+
+SHOP OLD JS
+
+getShopItems = (dataUrl) => {
+    $.get(dataUrl, (data) => {
+        console.log(data);
+
+        const shopClothingBody = document.querySelector(".shop-clothing__body");
+        //const shopShoesBody = document.querySelector(".shop-shoes__body");
+        //const shopAccessoriesBody = document.querySelector(".shop-accessories__body");
+
+        data.forEach(instance => {
+            const item = document.createElement("div");
+            item.classList.add("col-md-4");
+            item.innerHTML =`
+            <div class="card mb-4 product-wap rounded-0">
+                <div class="card rounded-0">
+                  <img
+                    class="card-img rounded-0 img-fluid"
+                    src="${instance.image}"
+                  />
+                  <div
+                    class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center"
+                  >
+                    <ul class="list-unstyled">
+                      <li>
+                        <a
+                          class="btn btn-success text-white mt-2"
+                          href="#shop-single"
+                          ><i class="far fa-eye"></i
+                        ></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <a href="shop-single.html" class="h3 text-decoration-none"
+                    >${instance.name}</a
+                  >
+                  <ul
+                    class="w-100 list-unstyled d-flex justify-content-between mb-0"
+                  >
+                    <li>M/L/X/XL</li>
+                  </ul>
+                  <ul class="list-unstyled d-flex justify-content-center mb-1">
+                    <li>
+                    ${generateStarIcons(instance.rating)}
+                    </li>
+                  </ul>
+                  <p class="text-center mb-0">$${instance.price}</p>
+                </div>
+              </div>
+            </div>
+            `;
+            
+            if(instance.category === "clothing") {
+              shopClothingBody.append(item);
+            }
+            if(instance.category === "shoes") {
+             // shopShoesBody.append(item);
+            }
+            if(instance.category === "accessories") {
+             // shopAccessoriesBody.append(item);
+            }
+
+        })
+    });
+}
+
+generateStarIcons = (rating) => {
+    let starIcons = '';
+    for (let i = 0; i < 5; i++) {
+        if (i < rating) {
+            starIcons += '<li><i class="text-warning fa fa-star"></i></li>';
+        } else {
+            starIcons += '<li><i class="text-muted fa fa-star"></i></li>';
+        }
+    }
+    return starIcons;
+}
+
+
+$(document).ready( () => {
+  getShopItems("../assets/json/products.json");
+})
+
+END SHOP OLD JS
+
+
+---- SHOP BEFORE SEARCH ----
+
+let fetchedData = []
+
+const shopBodyClothing = document.querySelector(".shop-body_clothing");
+const shopBodyShoes = document.querySelector(".shop-body_shoes");
+const shopBodyAccessories = document.querySelector(".shop-body_accessories");
+
+// const item5 = document.createElement("div");
+// item5.innerHTML = "HELLO WORLD";
+// shopBodyClothing.append(item5);
+
+getShopItems = (dataUrl) => {
+    $.get(dataUrl, (data) => {
+        //console.log(data);
+
+        data.forEach(instance => {
+            fetchedData.push(instance);
+            //console.log("FETCHED DATA = ", fetchedData)
+        })
+        // da nam po defaultu rendera iteme cim udjemo na site
+        console.log(fetchedData);
+        renderItems();
+    });
+}
+
+$("#item-type").change(function() {
+    //console.log("CHANGE");
+    blockUi("main");
+    renderItems();
+    unblockUi("main");
+});
+
+$("#sort-type").change(function() {
+  console.log("CHANGED SORT TYPE TO ", $("#sort-type").val());
+  let sortType = $("#sort-type").val();
+  if (sortType === "Most popular") {
+    sortItemsByRating();
+    renderItems();
+  }
+  else if (sortType === "Featured") {
+    sortItemsById();
+    renderItems();
+  }
+  else {
+    sortItemsAlphabetically();
+    renderItems();
+  }
+
+});
+
+function renderItems(itemsArray) {
+    // Clear all shop sections
+    $(".shop-body_clothing").empty();
+    $(".shop-body_shoes").empty();
+    $(".shop-body_accessories").empty();
+
+    // Loop through fetched data and append items based on category
+    fetchedData.forEach(instance => {
+        const item = document.createElement("div");
+        item.classList.add("col-md-4");
+        item.innerHTML = `
+            <div class="card mb-4 product-wap rounded-0">
+                <div class="card rounded-0">
+                    <img class="card-img rounded-0 img-fluid" src="${instance.image}" />
+                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a class="btn btn-success text-white mt-2" href="#shop-single"><i class="far fa-eye"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="shop-single.html" class="h3 text-decoration-none">${instance.name}</a>
+                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                        <li>M/L/X/XL</li>
+                    </ul>
+                    <ul class="list-unstyled d-flex justify-content-center mb-1">
+                        <li>${generateStarIcons(instance.rating)}</li>
+                    </ul>
+                    <p class="text-center mb-0">$${instance.price}</p>
+                </div>
+            </div>
+        `;
+
+        let selectedType = $("#item-type").val();
+        console.log("SELECT: ", selectedType);
+
+        //let itemTemp = document.createElement("div");
+        //itemTemp.innerHTML = "TEMP TEMP TEMP";
+
+        if (instance.category === "clothing" && selectedType === "Clothes") {
+            //console.log("ADD CLOTHES");
+            shopBodyClothing.append(item);
+            //shopBodyClothing.append(itemTemp);
+        } else if (instance.category === "shoes" && selectedType === "Shoes") {
+            //console.log("ADD SHOES");
+            shopBodyShoes.append(item);
+        } else if (instance.category === "accessories" && selectedType === "Accessories") {
+            //console.log("ADD ACCESSORIES")
+            shopBodyAccessories.append(item);
+        }
+    });
+    // sortItems();
+}
+
+sortItemsByRating = () => {
+  //let sortedByRating = fetchedData.sort((a, b) => b.rating - a.rating);
+  fetchedData.sort((a, b) => b.rating - a.rating);
+  console.log("SORTED BY RATING: ", fetchedData);
+}
+
+sortItemsById = () => {
+  //let sortedByRating = fetchedData.sort((a, b) => b.rating - a.rating);
+  fetchedData.sort((a, b) => a.id - b.id);
+  console.log("SORTED BY ID: ", fetchedData);
+}
+
+sortItemsAlphabetically = () => {
+  fetchedData.sort((a, b) => {
+    const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+   }
+   if (nameA > nameB) {
+     return 1;
+   }
+
+    // names must be equal
+    return 0;
+  });
+  console.log("SORTED BY ALPHABET: ", fetchedData);
+}
+
+// sortItems();
+
+generateStarIcons = (rating) => {
+    let starIcons = '';
+    for (let i = 0; i < 5; i++) {
+        if (i < rating) {
+            starIcons += '<li><i class="text-warning fa fa-star"></i></li>';
+        } else {
+            starIcons += '<li><i class="text-muted fa fa-star"></i></li>';
+        }
+    }
+    return starIcons;
+}
+
+blockUi = (element) => {
+    $(element).block({
+        message: '<div class="spinner-border text-primary" role="status"></div>',
+        css: {
+            backgroundColor: "transparent",
+            border: "0"
+        },
+        overlayCSS: {
+            backgroundColor: "#000000",
+            opacity: 0.25
+        }
+    });
+}
+
+unblockUi = (element) => {
+    $(element).unblock({});
+}
+
+$(document).ready( () => {
+  getShopItems("../assets/json/products.json");
+})
+
+
+
+
+---------------- SINGLE ITEM JS WITH ASYNC AWAIT (still not working) -------------------------
+let itemData;
+let shopBodySingle = document.querySelector(".shop-body_single");
+
+$(document).ready(function() {
+    let id = localStorage.getItem("product-id");
+    console.log("LOCALSTORAGE ID: ", id);
+
+    // Call fetchDataWithId with the item ID
+    fetchDataWithId(id, "../assets/json/products.json")
+    .then(() => {
+        // Once fetchDataWithId is finished, call renderItem
+        renderItem();
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+});
+
+fetchDataWithId = (id, dataUrl) => {
+    return new Promise((resolve, reject) => {
+        $.get(dataUrl, (data) => {
+            data.forEach(instance => {
+                if (instance.id == id) {
+                    itemData = instance;
+                }
+            });
+            console.log("ITEM DATA: ", itemData);
+            console.log("ITEM DATA IMAGE: ", itemData.image);
+            resolve(); // Resolve the promise once data is fetched and processed
+        })
+        .fail((xhr, status, error) => {
+            reject(error); // Reject the promise if there's an error
+        });
+    });
+}
+-----------------------------------------------------------------------------------------------
+
+<button class="carousel-control-prev" type="button" data-bs-target="#product-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#product-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+
+-----------------------------------------------------------------------------------------------
+CART SINGLE ITEM
+<!-- Single item -->
+                <div class="row">
+                  <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                    <!-- Image -->
+                    <div
+                      class="bg-image hover-overlay hover-zoom ripple rounded"
+                      data-mdb-ripple-color="light"
+                    >
+                      <img
+                        src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
+                        class="w-100"
+                        alt="Blue Jeans Jacket"
+                      />
+                      <a href="#!">
+                        <div
+                          class="mask"
+                          style="background-color: rgba(251, 251, 251, 0.2)"
+                        ></div>
+                      </a>
+                    </div>
+                    <!-- Image -->
+                  </div>
+
+                  <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                    <!-- Data -->
+                    <p><strong>Blue denim shirt</strong></p>
+                    <p>Quantity: <span>5</span></p>
+                    <p>Size: M</p>
+                    <p>Total: $<span>50.99</span></p>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm me-1 mb-2"
+                      data-mdb-toggle="tooltip"
+                      title="Remove item"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </button>
+                    <!-- Data -->
+                  </div>
+
+                  <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    
+                    <!-- Quantity -->
+                    
+                    <!-- Quantity -->
+
+                    <!-- Price -->
+                   
+                    <!-- Price -->
+                  </div>
+                  <hr class="my-4" />
+                </div>
+                <!-- Single item -->
+                
+-----------------------------------------------------------------------------------------------
