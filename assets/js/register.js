@@ -2,39 +2,39 @@ let registers = [];
 
 $("#register-form").validate({
     rules: {
-        "register-first_name" : {
+        "firstName" : {
             required: true
         },
-        "register-last_name" : {
+        "lastName" : {
             required: true
         },
-        "register-email": {
+        "email": {
             required: true,
             email: true
         },
-        "register-password": {
+        "pwd": {
             required: true
         },
-        "register-repeat_password" : {
+        "repeat_password" : {
             required: true,
             equalTo: "#register-password"
         },
     },
     messages: {
-        "register-first_name": {
+        "firstName": {
             required: "Please enter your first name"
         },
-        "register-last_name": {
+        "lastName": {
             required: "Please enter your last name"
         },
-        "register-email": {
+        "email": {
             required: "Please enter your email",
             email: "Please enter a valid email address"
         },
-        "register-password": {
+        "pwd": {
             required: "Please enter a password"
         },
-        "register-repeat_password": {
+        "repeat_password": {
             required: "Please repeat your password",
             equalTo: "Passwords do not match" // Message for password confirmation mismatch
         }
@@ -47,9 +47,15 @@ $("#register-form").validate({
 
         registers.push(register);
         console.log("CONTACTS = ", registers);
-        $("#register-form")[0].reset();
 
-        unblockUi("body");
+        $.post(Constants.API_BASE_URL + "add_user.php", register)
+        .done(function() {
+            $("#register-form")[0].reset();
+
+            unblockUi("body");
+
+            toastr.success("User added successfully");
+        })
     }
 });
 
