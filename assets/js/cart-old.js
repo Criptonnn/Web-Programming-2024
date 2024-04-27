@@ -8,7 +8,7 @@ const cartBody = document.querySelector(".cart_body");
 
 $("document").ready( () => {
     // fetchCartData("../assets/json/cart.json");
-    fetchCartData(Constants.API_BASE_URL + "get_cart_items.php");
+    fetchCartData("./assets/json/cart.json");
 })
 
 fetchCartData = (dataUrl) => {
@@ -32,11 +32,11 @@ renderItems = (cartDataArray) => {
     cartDataArray.forEach(async instance => {
         let item = document.createElement("div");
 
-        //let productInfo = await fetchDataWithId(instance.productId, "./assets/json/products.json");
-        //console.log("Item info: ", productInfo);
+        let productInfo = await fetchDataWithId(instance.productId, "./assets/json/products.json");
+        console.log("Item info: ", productInfo);
 
-        cartTotalPrice += (instance.quantity * instance.price);
-        //console.log("cartTotalPrice: ", cartTotalPrice);
+        cartTotalPrice += (instance.quantity * productInfo.price);
+        console.log("cartTotalPrice: ", cartTotalPrice);
 
         item.classList.add("row");
         item.innerHTML = `
@@ -47,7 +47,7 @@ renderItems = (cartDataArray) => {
             data-mdb-ripple-color="light"
             >
             <img
-                src="assets/img/shop_03.jpg"
+                src="${productInfo.image}"
                 class="w-100"
                 alt="Blue Jeans Jacket"
             />
@@ -63,16 +63,16 @@ renderItems = (cartDataArray) => {
 
         <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
             <!-- Data -->
-            <p><strong>${instance.name}</strong></p>
+            <p><strong>${productInfo.name}</strong></p>
             <p>Quantity: <span><strong>${instance.quantity}</strong></span></p>
             <p>Size: <strong>${instance.size}</strong></p>
-            <p>Total: <strong>$<span>${(instance.quantity * instance.price).toFixed(2)}</span></strong></p> <!-- toFixed rounda na dvije decimale -->
+            <p>Total: <strong>$<span>${(instance.quantity * productInfo.price).toFixed(2)}</span></strong></p> <!-- toFixed rounda na dvije decimale -->
             <button
             type="button"
             class="btn btn-primary btn-sm me-1 mb-2"
             data-mdb-toggle="tooltip"
             title="Remove item"
-            onclick=CartService.delete_cart_product(${instance.id})
+            onclick="removeItem(this)"
             >
             <i class="fas fa-trash"></i>
             </button>
@@ -97,34 +97,34 @@ removeItem = (button) => {
     $(button).closest(".row").remove();
 }
 
-// fetchDataWithId = (id, dataUrl) => {
-//     return new Promise((resolve, reject) => {
-//         $.get(dataUrl, (data) => {
-//             // data.find() bolje nego forEach()
-//             const foundInstance = data.find(instance => instance.id === id);
-//             if (foundInstance) {
-//                 console.log("instance: ", foundInstance);
-//                 resolve(foundInstance);
-//             } else {
-//                 reject(new Error(`Instance with ID ${id} not found`));
-//             }
-//         }).done(() => {
-//             console.log("DONE FETCHING DATA");
-//         }).fail((error) => {
-//             reject(new Error(`Failed to fetch data: ${error}`));
-//         });
-//     });
-// }
+fetchDataWithId = (id, dataUrl) => {
+    return new Promise((resolve, reject) => {
+        $.get(dataUrl, (data) => {
+            // data.find() bolje nego forEach()
+            const foundInstance = data.find(instance => instance.id === id);
+            if (foundInstance) {
+                console.log("instance: ", foundInstance);
+                resolve(foundInstance);
+            } else {
+                reject(new Error(`Instance with ID ${id} not found`));
+            }
+        }).done(() => {
+            console.log("DONE FETCHING DATA");
+        }).fail((error) => {
+            reject(new Error(`Failed to fetch data: ${error}`));
+        });
+    });
+}
 
-// fetchDataWithId_v0 = (id, dataUrl) => {
-//     $.get(dataUrl, (data) => {
-//         data.forEach(instance => {
-//             if (instance.id === id) {
-//                 console.log("instance: ", instance);
-//                 return instance;
-//             }
-//         })
-//     }).done( () => {
-//         console.log("DONE FETCHING DATA");
-//     })
-// }
+fetchDataWithId_v0 = (id, dataUrl) => {
+    $.get(dataUrl, (data) => {
+        data.forEach(instance => {
+            if (instance.id === id) {
+                console.log("instance: ", instance);
+                return instance;
+            }
+        })
+    }).done( () => {
+        console.log("DONE FETCHING DATA");
+    })
+}

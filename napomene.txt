@@ -18,3 +18,8 @@ Imao sam svaku skriptu ukljucenu na svaki .html file, a treba samo imati na inde
 Zbog skripti kao sto su shop.js, one se odmah loadaju i onda dodje do problema jer nismo usli na shop page. Tako da, rjesenje za to je:
 Na index.html ostaviti skripte koje su svugdje potrebne i vazda bi loadane trebale biti (jquery, jquery.validate,...), a na zasebnim
 pageovima, kao npr. shop.html, njemu na dnu includeati shop.js, za shop-single.html na dnu incudeati shop-single.js,...
+
+Baze: formu za dodavanje producta, prvo sam name atribute stavio kao product-admin-name, product-admin-brand..., ali kasnije je doslo do problema
+kad sam htio da executam query, tacnije problem kod bindanja parametara, tako da sam ih renameao u name, brand,...
+
+u rest_client.js, .error callback je zamijenjen sa .fail jer je .error deprecated

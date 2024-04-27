@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="assets/css/custom.css" />
     <link rel="stylesheet" href="assets/css/spapp.css" />
 
+    <link rel="stylesheet" href="assets/css/toastr.min.css" />
+    <link rel="stylesheet" href="assets/css/datatables.min.css" />
+
     <!-- Load fonts style after rendering the layout styles -->
     <link
       rel="stylesheet"
@@ -214,6 +217,7 @@
     </div>
 
     <main id="spapp" role="main">
+      <section id="shop-admin" data-load="shop-admin.html"></section>
       <section id="about" data-load="about.html"></section>
       <section id="contact" data-load="contact.html"></section>
       <!-- <section id="shop-clothing" data-load="shop-clothing.html"></section> -->
@@ -370,6 +374,13 @@
     <script src="assets/js/jquery-blockUI.js"></script>
     <script src="assets/js/jquery.validate.js"></script>
     <script src="assets/js/select2.min.js"></script>
+
+    <script src="assets/js/utils/utils.js"></script>
+    <script src="assets/js/utils/constants.js"></script>
+    <script src="assets/js/utils/rest_client.js"></script>
+
+    <script src="assets/js/toastr.min.js"></script>
+    <script src="assets/js/datatables.min.js"></script>
     <script>
       let app = $.spapp({
         templateDir: "./tpl/",
