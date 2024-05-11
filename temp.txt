@@ -481,3 +481,71 @@ CART SINGLE ITEM
                 <!-- Single item -->
                 
 -----------------------------------------------------------------------------------------------
+GET products/
+/**
+ * @OA\Get(
+ *      path="/products",
+ *      tags={"products"},
+ *      summary="Get paginated products",
+ *      @OA\Parameter(
+ *          name="start",
+ *          in="query",
+ *          description="Offset for pagination",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="integer"
+ *          )
+ *      ),
+ *      @OA\Parameter(
+ *          name="search",
+ *          in="query",
+ *          description="Search term",
+ *          required=false,
+ *          @OA\Schema(
+ *              type="string"
+ *          )
+ *      ),
+ *      @OA\Parameter(
+ *          name="draw",
+ *          in="query",
+ *          description="Draw parameter",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="integer"
+ *          )
+ *      ),
+ *      @OA\Parameter(
+ *          name="length",
+ *          in="query",
+ *          description="Number of entries per page",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="integer"
+ *          )
+ *      ),
+ *      @OA\Parameter(
+ *          name="order_column",
+ *          in="query",
+ *          description="Column to order by",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="string"
+ *          )
+ *      ),
+ *      @OA\Parameter(
+ *          name="order_direction",
+ *          in="query",
+ *          description="Order direction (ASC or DESC)",
+ *          required=true,
+ *          @OA\Schema(
+ *              type="string",
+ *              enum={"ASC", "DESC"}
+ *          )
+ *      ),
+ *      @OA\Response(
+ *           response=200,
+ *           description="Successful operation"
+ *      )
+ * )
+ */
+ ----------------------------------------------------------------------------------------------

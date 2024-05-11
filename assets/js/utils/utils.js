@@ -27,6 +27,14 @@ const Utils = {
         draw_callback = null,
         page_length = 10
       ) {
+        var userDataString = Utils.get_from_localstorage("user");
+        var userData = JSON.parse(userDataString);
+        
+        var token = "Undefined";
+        if(userData != null) {
+          token = userData.token;
+        }
+
         if ($.fn.dataTable.isDataTable("#" + table_id)) {
           details_callback = false;
           $("#" + table_id)
@@ -46,6 +54,10 @@ const Utils = {
           ajax: {
             url: url,
             type: "GET",
+            headers: {
+              // "Authentication" : JSON.parse(Utils.get_from_localstorage("user")).token
+              "Authentication": token
+            }
           },
           lengthMenu: [
             [5, 10, 15, 50, 100, 200, 500, 5000],
@@ -60,4 +72,21 @@ const Utils = {
           },
         });
     },
+    set_to_localstorage: function(key, value) {
+      window.localStorage.setItem(key, JSON.stringify(value)); // BEZ JSON.stringify Storage {user: '[object Object]'
+    },
+    get_from_localstorage: function(key) {
+      return window.localStorage.getItem(key);
+    },
+    get_localstorage_user_value : function(key) {
+      return JSON.parse(this.get_from_localstorage("user"))[key];
+    },
+    logout: function() {
+      if(confirm("Are you sure you want to log out of your account?")) {
+        window.localStorage.clear();
+        window.location.reload(); // bez ove linije, redirecta na login page, ali ne reloada page
+      } else {
+        console.log("Cancelled logout");
+      }
+    }
   };

@@ -7,7 +7,7 @@ class CartDao extends BaseDao {
         parent::__construct('cart');
     }
 
-    public function get_cart_products_paginated($cartId) {
+    public function get_cart_products($cartId) {
         $query = "SELECT 
             cp.id, #bitan detalj je da passamo id od cartProducta, ovako je najlakse jer ovo koristimo da deletamo id
             p.name, 
@@ -37,5 +37,35 @@ class CartDao extends BaseDao {
                   FROM cart_products 
                   WHERE id = :id";
         $this->execute($query, ["id" => $id]);
+    }
+
+    public function get_all_carts() {
+        $query = "SELECT * FROM cart;";
+        return $this->query($query, []);
+    }
+
+    public function get_user_cart_products($userId) {
+        $query = "SELECT 
+            cp.id, # bitan detalj je da passamo id od cartProducta, ovako je najlakse jer ovo koristimo da deletamo id
+            p.name, 
+            p.brand, 
+            p.description, 
+            p.gender, 
+            p.category, 
+            p.rating, 
+            p.price, 
+            p.image, 
+            cp.quantity,
+            cp.size
+            FROM 
+                product p
+            JOIN 
+                cart_products cp ON p.id = cp.productId
+            JOIN 
+                cart c ON c.id = cp.cartId
+            WHERE c.userId = :userId;
+        ";
+        
+       return $this->query($query, ["userId" => $userId]);
     }
 }

@@ -11,8 +11,8 @@ class CartService {
     }
 
 
-    public function get_cart_products_paginated($cartId) {
-        $rows =  $this->cart_dao-> get_cart_products_paginated($cartId);
+    public function get_cart_products($cartId) {
+        $rows =  $this->cart_dao-> get_cart_products($cartId);
 
         return [
             'data' => $rows
@@ -22,4 +22,11 @@ class CartService {
         $this->cart_dao->delete_cart_product($cart_product_id);
     }
 
+    public function get_all_carts() {
+        return $this->cart_dao->get_all_carts();
+    }
+
+    public function get_user_cart_products($userId) {
+        return $this->cart_dao->get_user_cart_products($userId);
+    }
 }

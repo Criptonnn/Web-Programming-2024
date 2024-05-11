@@ -8,7 +8,7 @@ $payload = $_REQUEST;
 
 if ($payload["name"] == NULL || $payload["name"] == "") {
     header("HTTP/1.1 500 Bad Request");
-    die(json_encode(["error" => "First name field missing"]));
+    die(json_encode(["error" => "name field missing"]));
 }
 
 $product_service = new ProductService();

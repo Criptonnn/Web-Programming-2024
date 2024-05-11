@@ -8,7 +8,30 @@ const cartBody = document.querySelector(".cart_body");
 
 $("document").ready( () => {
     // fetchCartData("../assets/json/cart.json");
-    fetchCartData(Constants.API_BASE_URL + "get_cart_items.php");
+
+    if(Utils.get_from_localstorage("user")) {
+        var user_id = parseInt(Utils.get_localstorage_user_value("id"));
+        // var user_id = 5;
+
+        // fetchCartData(Constants.API_BASE_URL + `cart_products/${user_id}`);
+        RestClient.get(`cart_products/user/${user_id}`, function(data) {
+            console.log("Data fetched: ", data);
+
+            data.forEach(instance => {
+                cartData.push(instance);
+                itemCount++;
+                //console.log("FETCHED DATA = ", fetchedData)
+            })
+            console.log("Data added to cartData: ", cartData);
+            // da nam po defaultu rendera iteme cim udjemo na site
+            renderItems(cartData);
+            cartItemCount.innerHTML = itemCount;
+            });
+    } else {
+        alert("You are not logged in!");
+    }
+
+    // fetchCartData(Constants.API_BASE_URL + "cart_products/${}");
 })
 
 fetchCartData = (dataUrl) => {
@@ -96,35 +119,3 @@ removeItem = (button) => {
     // button in this case refers to the button we specified in the onClick attribute onClick=removeItem(this)
     $(button).closest(".row").remove();
 }
-
-// fetchDataWithId = (id, dataUrl) => {
-//     return new Promise((resolve, reject) => {
-//         $.get(dataUrl, (data) => {
-//             // data.find() bolje nego forEach()
-//             const foundInstance = data.find(instance => instance.id === id);
-//             if (foundInstance) {
-//                 console.log("instance: ", foundInstance);
-//                 resolve(foundInstance);
-//             } else {
-//                 reject(new Error(`Instance with ID ${id} not found`));
-//             }
-//         }).done(() => {
-//             console.log("DONE FETCHING DATA");
-//         }).fail((error) => {
-//             reject(new Error(`Failed to fetch data: ${error}`));
-//         });
-//     });
-// }
-
-// fetchDataWithId_v0 = (id, dataUrl) => {
-//     $.get(dataUrl, (data) => {
-//         data.forEach(instance => {
-//             if (instance.id === id) {
-//                 console.log("instance: ", instance);
-//                 return instance;
-//             }
-//         })
-//     }).done( () => {
-//         console.log("DONE FETCHING DATA");
-//     })
-// }

@@ -1,6 +1,6 @@
 var UserService = {
     reload_user_datatable: function() {
-        Utils.get_datatable("admin-table-users", Constants.API_BASE_URL + "get_users.php",
+        Utils.get_datatable("admin-table-users", Constants.API_BASE_URL + "users",
             // napomena: ova data se referencea na podatke koje cemo stavit u columns, a ne na column name, tako da, ako je prva
             // data: "action", to znaci da ce se u prvu kolonu stavljati podaci od "action", ako bi prvo stavili data: firstName
             // u prvu kolonu sa titleom Action, bi se upisivali firstName-s
@@ -15,11 +15,13 @@ var UserService = {
         // alert("DELETE " + product_id);
         if(confirm("Are you sure you want to delete the user with id " + user_id + "?") == true) {
             RestClient.delete(
-                "delete_user.php?id=" + user_id,
+                // "delete_user.php?id=" + user_id,
+                "users/delete/" + user_id,
                 {},
                 function(data) {
                     UserService.reload_user_datatable();
                     console.log("DELETED DATA " + data);
+                    toastr.success("User deleted");
                 },
                 function(error) {
                     console.log(error);

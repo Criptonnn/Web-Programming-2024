@@ -37,4 +37,9 @@ class ProductService {
         
         return $this->product_dao->edit_product($id, $product);
     }
+
+    // for openAPI Swagger
+    public function get_all_products() {
+        return $this->product_dao->get_all_products();
+    }
 }

@@ -23,3 +23,15 @@ Baze: formu za dodavanje producta, prvo sam name atribute stavio kao product-adm
 kad sam htio da executam query, tacnije problem kod bindanja parametara, tako da sam ih renameao u name, brand,...
 
 u rest_client.js, .error callback je zamijenjen sa .fail jer je .error deprecated
+
+FlightPhP i Swagger:
+problem za FlightPhP, u index.php problem je bio sto sam stavio komentar iznad <?php taga, i to mi se returnalo kao response, i nije valjao
+json format zbog toga tako da mi se datatables nisu popunjavale
+Za Swagger, tj za routes, route gdje mi returna sve producte (/product/all) nije radila kad sam je stavio na dnu u Flight::group. Medjutim kad
+sam stavio na pocetak onda je radilo, takodjer je radilo izvan Flight::group.
+
+Ispravka baze: da bi brisali user-a koji ima cart dodijeljen njemu, morali smo u bazi, u cart tabeli promijenit foreign key constaint za usera: ON DELETE: CASCASE
+
+Dodatak bazi: u UserDAO, na dnu u funkciji add_user, dodan je kod za pravljenje cart-a za tog usera odmah na pocetku kada napravimo taj user, i sa ovim ON DELETE: CASCADE, kada izbrisemo usera, izbrisat cemo i cart od tog usera
+
+PITANJE(potrosilo mi 2 sata): zasto kada stavim u localStorage "user"-a, u login.js skripti, iako JSON.parseam output i stavim ga u localStorage, on mi se stavi kao string, i onda u RestClient-u i u Utils.get_datatable, moram koristiti JSON.parse svaki put

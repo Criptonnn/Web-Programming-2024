@@ -155,7 +155,7 @@
               </li>
             </ul>
           </div>
-          <div class="navbar align-self-center d-block">
+          <div class="navbar align-self-center d-flex align-items-center">
             <a
               class="nav-icon position-relative text-decoration-none"
               href="#cart"
@@ -164,9 +164,13 @@
             </a>
             <a
               class="nav-icon position-relative text-decoration-none"
+              id="login-user-link"
               href="#login"
             >
-              <i class="fa fa-fw fa-user text-dark mr-3"></i>
+              <!-- <i
+                class="fa fa-fw fa-user text-dark mr-3"
+                id="login-user-icon"
+              ></i> -->
             </a>
           </div>
         </div>
@@ -386,9 +390,25 @@
         templateDir: "./tpl/",
         defaultView: "#landing",
       });
-      // $(document).ready(() => {
+
       app.run();
-      // });
+    </script>
+
+    <script>
+      if (!Utils.get_from_localstorage("user")) {
+        $("#login-user-link").html(`<i
+                class="fa fa-fw fa-user text-dark mr-3"
+                id="login-user-icon"
+              ></i>`);
+      } else {
+        $("#login-user-link").html(
+          `<div class="d-flex">
+           <p class="mb-0 me-3" onClick="Utils.logout()">Logout</p>
+           <a href="#shop-admin" class="link link-info">Admin</a>
+           </div>
+          `
+        );
+      }
     </script>
     <!-- End Script -->
   </body>
