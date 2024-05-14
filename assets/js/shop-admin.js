@@ -1,5 +1,5 @@
 
-console.log("HELLO");
+// console.log("HELLO");
 
 ProductService.reload_product_datatable();
 UserService.reload_user_datatable();
@@ -32,7 +32,6 @@ $("#add-product-form").validate({
         }
     },
     submitHandler: function(form, event) {
-        // ProductService.reload_product_datatable(); // HTTP GET REQUEST
 
         console.log("HELLO 2");
         event.preventDefault(); // da mi ne submita
@@ -40,38 +39,33 @@ $("#add-product-form").validate({
 
         let product = serializeForm(form);
         console.log("PRODUCT: " + product);
+        console.log("TEST ZA IMG: " + form["image"]["value"]);
+
+        // form["name"]["image"] = convert_image_to_base64(form["image"]);
+        
+
+
         console.log(JSON.stringify(product));
 
-        $.post(Constants.API_BASE_URL + "add_product.php", product)
-        .done(function (product) {
-
-            Utils.unblock_ui("body");
-            $("#admin-modal").modal("toggle");
-            
-            console.log("UTILS: " + JSON.stringify(Utils));
-            
-            // Utils.get_datatable("admin-table-products", Constants.API_BASE_URL + "get_products.php",
-            //     //[{data: "user-firstname"}, {data: "user-lastname"}, {data: "user-email"}, {data: "user-created-at"}], NE RADI OVAKO, dole stavimo index umjesto name
-            //     [{data: 0}, {data: 1}, {data: 2}, {data: 3}, {data: 4}, {data: 5}, {data: 6}, {data: 7}],
-            //     null,
-            //     function() {
-            //         console.log("datatable drawn");
-            //     }
-            // );
-
-           ProductService.reload_product_datatable();
-
-            toastr.success("Product added successfully");
-
-        })
-
-        // RestClient.post(Constants.API_BASE_URL + "add_product.php", product, function (response) {
+        // $.post(Constants.API_BASE_URL + "products/add", product)
+        // .done(function (product) {
         //     Utils.unblock_ui("body");
+        //     $("#admin-modal").modal("toggle");
+        //     // console.log("UTILS: " + JSON.stringify(Utils));
+        //     ProductService.reload_product_datatable();
         //     toastr.success("Product added successfully");
-        // },
-        // function (error) {
-        // toastr.error(error);
-        // });
+        // })
+
+        // OVO ME ZADEVERALO, NE IDE Constants.API_BASE_URL + "products/add" NEGO SAMO "products/add"
+        RestClient.post("products/add", product, function (response) {
+            Utils.unblock_ui("body");
+            toastr.success("Product added successfully");
+            $("#admin-modal").modal("toggle");
+            ProductService.reload_product_datatable();
+        },
+        function (error) {
+        toastr.error(error);
+        });
 
 
         $("#add-product-form")[0].reset();
@@ -116,3 +110,18 @@ serializeForm_noviKojiIstoNeRadi = (form) => { // NE RADI NI OVAJ SA IMAGEOM
   
     return jsonResult;
   }
+
+  const convert_image_to_base64 = (file) => {
+    if (file instanceof Blob) {
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+            const base64String = event.target.result.split(',')[1]; // Extracting the base64 string from the data URL
+            console.log(base64String); // Output the base64 string to console or use it as needed
+        };
+        
+        reader.readAsDataURL(file);
+    } else {
+        console.error("Invalid file type or file not found.");
+    }
+}

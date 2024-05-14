@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/BaseDao.class.php';
+require_once __DIR__ . '/BaseDao.class.php'; // dir zavrsava bez / tako da moramo ga dodati prije BaseDao.class.php
 
 class ProductDao extends BaseDao {
     public function __construct() {
@@ -68,7 +68,7 @@ class ProductDao extends BaseDao {
         return $this->query_unique("SELECT * FROM product WHERE id = :id", ["id" => $product_id]);
     }
 
-    function edit_product($id, $product) {
+    public function edit_product($id, $product) {
         $query = "UPDATE product SET
          name = :name,
          brand = :brand,
@@ -91,5 +91,10 @@ class ProductDao extends BaseDao {
             "id" => $id // ovo smo zaboravili
         ]);
         
+    }
+
+    public function get_all_products() {
+        $query = "SELECT * FROM product;";
+        return $this->query($query, []);
     }
 }

@@ -42,6 +42,21 @@ class UserDao extends BaseDao {
             "email" => $user["email"],
             "pwd" => $user["pwd"]
         ]);
+        
+
+        // THIS CODE IS USED FOR INSTANTLY CREATING A CART INSTANCE FOR EACH USER WHEN THAT USER IS CREATED
+        $query_user_id = "SELECT id FROM user ORDER BY id DESC LIMIT 1;";
+        $fetched_user_id = $this->query($query_user_id, []);
+
+        $cart_query = "INSERT INTO cart(userId) VALUES(:userId);";
+        $cart_stmt = $this->connection->prepare($cart_query);
+        $cart_stmt->execute(["userId" => $fetched_user_id[0]["id"]]);
+
         return $user;
+    }
+
+    public function get_all_users() {
+        $query = "SELECT * FROM user;";
+        return $this->query($query, []);
     }
 }

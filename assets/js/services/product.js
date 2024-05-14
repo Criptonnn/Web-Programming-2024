@@ -1,6 +1,8 @@
+console.log("Product service page works");
+
 var ProductService = {
     reload_product_datatable: function() {
-        Utils.get_datatable("admin-table-products", Constants.API_BASE_URL + "get_products.php",
+        Utils.get_datatable("admin-table-products", Constants.API_BASE_URL + "products", // BILO get_products.php UMJESTO PRODUCTS, zato sto smo to specifirali za FlightPHP
             //[{data: "user-firstname"}, {data: "user-lastname"}, {data: "user-email"}, {data: "user-created-at"}], NE RADI OVAKO, dole stavimo index umjesto name
             // [{data: 0}, {data: 1}, {data: 2}, {data: 3}, {data: 4}, {data: 5}, {data: 6}, {data: 7}],
             [{data: "action"}, {data: "name"}, {data: "brand"}, {data: "description"}, {data: "gender"}, {data: "category"}, {data: "rating"}, {data: "price"}, {data: "createdAt"}],
@@ -13,7 +15,8 @@ var ProductService = {
     open_edit_product_modal : function(product_id) {
          console.log("EDIT " + product_id);
         RestClient.get(
-            "get_product.php?id=" + product_id,
+            // "get_product.php?id=" + product_id,
+            "products/" + product_id,
             function(data) {
                 console.log("PRODUCT DATA CAME, " + JSON.stringify(data));
                 console.log("data id " + data.id);
@@ -39,11 +42,13 @@ var ProductService = {
         // alert("DELETE " + product_id);
         if(confirm("Are you sure you want to delete product with id " + product_id + "?") == true) {
             RestClient.delete(
-                "delete_product.php?id=" + product_id,
+                // "delete_product.php?id=" + product_id,
+                "products/delete/" + product_id,
                 {},
                 function(data) {
-                    ProductService.reload_product_datatable();
+                    // ProductService.reload_product_datatable();
                     console.log("DELETE DATA " + data);
+                    toastr.success("Product deleted");
                 },
                 function(error) {
                     console.log(error);

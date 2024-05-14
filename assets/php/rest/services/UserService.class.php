@@ -26,7 +26,12 @@ class UserService {
     }
 
     public function add_user($user) {
+        $user["pwd"] = password_hash($user["pwd"], PASSWORD_BCRYPT);
         return $this->user_dao->add_user($user);
+    }
+
+    public function get_all_users() {
+        return $this->user_dao->get_all_users();
     }
 
 }

@@ -1,5 +1,9 @@
 let logins = [];
 
+if(Utils.get_from_localstorage("user")) {
+    window.location = "../Web-Programming-2024";
+}
+
 $("#login-form").validate({
     rules: {
         "login-email": {
@@ -22,35 +26,31 @@ $("#login-form").validate({
     },
     submitHandler: function(form, event) {
         event.preventDefault(); // da mi ne submita
-        blockUi("body");
+
+        Utils.block_ui("body");
         let login = serializeForm(form);
         console.log(JSON.stringify(login));
 
-        logins.push(login);
-        console.log("CONTACTS = ", logins);
-        $("#login-form")[0].reset();
+        RestClient.post(
+            "auth/login",
+            login,
+            function(response) {
+                $("#login-form")[0].reset();
+                Utils.unblock_ui("body");
+                Utils.set_to_localstorage("user", response);
+                // Utils.set_to_localstorage("user", JSON.parse(response));
+                console.log("Response is ", response);
 
-        unblockUi("body");
+                window.location = "../Web-Programming-2024";
+            },
+            function(error) {
+                Utils.unblock_ui("body");
+                toastr.error(error.responseText);
+            }
+        );
+
     }
 });
-
-blockUi = (element) => {
-    $(element).block({
-        message: '<div class="spinner-border text-primary" role="status"></div>',
-        css: {
-            backgroundColor: "transparent",
-            border: "0"
-        },
-        overlayCSS: {
-            backgroundColor: "#000000",
-            opacity: 0.25
-        }
-    });
-}
-
-unblockUi = (element) => {
-    $(element).unblock({});
-}
 
 serializeForm = (form) => {
     let jsonResult = {};
