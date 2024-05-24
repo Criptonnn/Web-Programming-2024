@@ -2,7 +2,7 @@ console.log("Product service page works");
 
 var ProductService = {
     reload_product_datatable: function() {
-        Utils.get_datatable("admin-table-products", Constants.API_BASE_URL + "products", // BILO get_products.php UMJESTO PRODUCTS, zato sto smo to specifirali za FlightPHP
+        Utils.get_datatable("admin-table-products", Constants.get_api_base_url() + "products", // BILO get_products.php UMJESTO PRODUCTS, zato sto smo to specifirali za FlightPHP
             //[{data: "user-firstname"}, {data: "user-lastname"}, {data: "user-email"}, {data: "user-created-at"}], NE RADI OVAKO, dole stavimo index umjesto name
             // [{data: 0}, {data: 1}, {data: 2}, {data: 3}, {data: 4}, {data: 5}, {data: 6}, {data: 7}],
             [{data: "action"}, {data: "name"}, {data: "brand"}, {data: "description"}, {data: "gender"}, {data: "category"}, {data: "rating"}, {data: "price"}, {data: "createdAt"}],

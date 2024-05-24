@@ -34,4 +34,8 @@ class UserService {
         return $this->user_dao->get_all_users();
     }
 
+    public function get_user_by_id($id) {
+        return $this->user_dao->get_user_by_id($id);
+    }
+
 }

@@ -12,6 +12,9 @@ Flight::set("cart_service", new CartService());
  *      path="/cart/all",
  *      tags={"cart"},
  *      summary="Get all carts",
+ *      security={
+ *          {"ApiKey":{}}
+ *      },
  *      @OA\Response(
  *           response=200,
  *           description="Get all carts"
@@ -29,6 +32,9 @@ Flight::route("GET /cart/all", function() {
  *      path="/cart_products/{cart_id}",
  *      tags={"cart"},
  *      summary="Get all products from a specified cart",
+ *      security={
+ *          {"ApiKey":{}}
+ *      },
  *      @OA\Response(
  *           response=200,
  *           description="Get all cart products"
@@ -49,6 +55,9 @@ Flight::route("GET /cart_products/@cart_id", function($cart_id) {
  *      path="/cart_products/user/{user_id}",
  *      tags={"cart"},
  *      summary="Get all products from a specified user's cart",
+ *      security={
+ *          {"ApiKey":{}}
+ *      },
  *      @OA\Response(
  *           response=200,
  *           description="Get all cart products from a certain user"
@@ -66,6 +75,9 @@ Flight::route("GET /cart_products/user/@user_id", function($user_id) {
  *      path="/cart_products/delete/{cart_id}",
  *      tags={"cart"},
  *      summary="Delete cart by id",
+ *      security={
+ *          {"ApiKey":{}}
+ *      },
  *      @OA\Response(
  *           response=200,
  *           description="Delete the cart with the specified id from the database"
