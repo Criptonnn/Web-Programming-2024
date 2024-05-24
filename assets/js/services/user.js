@@ -1,6 +1,6 @@
 var UserService = {
     reload_user_datatable: function() {
-        Utils.get_datatable("admin-table-users", Constants.API_BASE_URL + "users",
+        Utils.get_datatable("admin-table-users", Constants.get_api_base_url() + "users",
             // napomena: ova data se referencea na podatke koje cemo stavit u columns, a ne na column name, tako da, ako je prva
             // data: "action", to znaci da ce se u prvu kolonu stavljati podaci od "action", ako bi prvo stavili data: firstName
             // u prvu kolonu sa titleom Action, bi se upisivali firstName-s

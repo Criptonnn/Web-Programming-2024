@@ -14,6 +14,9 @@ Flight::group("/products", function() {
      *      path="/products/all",
      *      tags={"products"},
      *      summary="Get all products",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="Get all products"
@@ -30,6 +33,9 @@ Flight::group("/products", function() {
      *      path="/products/product",
      *      tags={"products"},
      *      summary="Get product by id with query parameter",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="A single product, or false if the product with the specified id doesn't exist"
@@ -48,6 +54,9 @@ Flight::group("/products", function() {
      *      path="/products/product/{product_id}",
      *      tags={"products"},
      *      summary="Get product by id with path parameter",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="A single product, or false if the product with the specified id doesn't exist"
@@ -62,9 +71,6 @@ Flight::group("/products", function() {
 
     Flight::route('GET /', function() {
         // $payload = $_REQUEST;
-
-        // --- php/rest/authorization.php ---
-        authorize();
     
         $payload = Flight::request()->query;
     
@@ -122,6 +128,9 @@ Flight::group("/products", function() {
      *      path="/products/add",
      *      tags={"products"},
      *      summary="Add or edit a product",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="To add a product, leave out the product_id. If you want to edit a product, specity its Product ID"
@@ -175,6 +184,9 @@ Flight::group("/products", function() {
      *      path="/products/delete/{product_id}",
      *      tags={"products"},
      *      summary="Delete product by id",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="Delete the product with the specified id from the database, or 'Invalid product id'"

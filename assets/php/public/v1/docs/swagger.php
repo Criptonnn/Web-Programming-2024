@@ -2,7 +2,11 @@
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
-define('BASE_URL', 'http://localhost/Web-Programming-2024/assets/php/');
+if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1") {
+    define('BASE_URL', 'http://localhost/Web-Programming-2024/assets/php/');
+} else {
+    define('BASE_URL', $_SERVER["SERVER_NAME"] . "assets/php/"); // SERVER["SERVER_NAME"] = https://king-prawn-app-rtyg8.ondigitalocean.app/
+}
 
 error_reporting(0);
 

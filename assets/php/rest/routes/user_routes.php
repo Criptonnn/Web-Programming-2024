@@ -15,6 +15,9 @@ Flight::group("/users", function() {
      *      path="/users/all",
      *      tags={"users"},
      *      summary="Get all users",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="Get all users"
@@ -26,12 +29,33 @@ Flight::group("/users", function() {
         Flight::json($data);
     });
 
+    /**
+     * @OA\Get(
+     *      path="/users/info",
+     *      tags={"users"},
+     *      summary="Get info of logged in user",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
+     *      @OA\Response(
+     *           response=200,
+     *           description="Get info of logged in user"
+     *      )
+     * )
+     */
+    Flight::route("GET /info", function() {
+        Flight::json(Flight::get("user_service")->get_user_by_id(Flight::get("user")->id));
+    });
+
     // In order for the DELETE to work for users who have a Cart bound to them, we need to update the foreign key constaint in the cart table and set it to ON DELETE = CASCADE, to delete both the user and the cart
     /**
      * @OA\Delete(
      *      path="/users/delete/{user_id}",
      *      tags={"users"},
      *      summary="Delete user by id",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="Delete the user with the specified id from the database, or get 'Invalid user id'"
@@ -40,24 +64,6 @@ Flight::group("/users", function() {
      * )
      */
     Flight::route("DELETE /delete/@user_id", function($user_id) {
-
-        // try {
-        //     $token = Flight::request()->getHeader("Authentication");
-        //     if(!$token) {
-        //         Flight::halt(500, "Missing Auth Header");
-        //     }
-        //     $decoded_token = JWT::decode($token, new Key(JWT_SECRET, "HS256"));
-        //     // Flight::json([
-        //     //     "jwt_decoded" => $decoded_token,
-        //     //     "user" => $decoded_token->user
-        //     // ]);
-        // } catch(\Exception $e) {
-        //     Flight::halt(401, $e->getMessage()); // errori vezani za provjeru tokena, token expired, pogresan jwt_secret...
-        // }
-
-        // --- php/rest/authorization.php ---
-        authorize();
-
         if ($user_id == NULL || $user_id == "") {
             Flight::halt(500, "Invalid user id");
         }
@@ -72,6 +78,9 @@ Flight::group("/users", function() {
      *      path="/users/add",
      *      tags={"users"},
      *      summary="Add an user",
+     *      security={
+     *          {"ApiKey":{}}
+     *      },
      *      @OA\Response(
      *           response=200,
      *           description="Input the user info and add the user to the database"
@@ -102,10 +111,6 @@ Flight::group("/users", function() {
     });
 
     Flight::route("GET /", function() {
-        
-        // --- php/rest/authorization.php ---
-        authorize();
-
         $payload = Flight::request()->query;
     
         // ovi params se passaju kroz payload koji dodje uz DataTables, sve ove values su definisani od njegove strane

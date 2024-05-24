@@ -48,7 +48,7 @@ $("#register-form").validate({
         registers.push(register);
         console.log("CONTACTS = ", registers);
 
-        $.post(Constants.API_BASE_URL + "users/add", register)
+        $.post(Constants.get_api_base_url() + "users/add", register)
         .done(function() {
             $("#register-form")[0].reset();
 
