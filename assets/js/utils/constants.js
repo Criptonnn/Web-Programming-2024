@@ -5,7 +5,8 @@ var Constants = {
         if(location.hostname == "localhost") {
             return "http://localhost/Web-Programming-2024/assets/php/";
         } else {
-            return "https://king-prawn-app-rtyg8.ondigitalocean.app/assets/php/";
+            //return "https://king-prawn-app-rtyg8.ondigitalocean.app/assets/php/";
+            return "https://goldfish-app-vdz96.ondigitalocean.app/assets/php/";
         }
     }
 };
